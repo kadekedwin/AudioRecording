@@ -19,7 +19,7 @@ struct PersistenceController {
             newAudio.name = "Test"
             newAudio.path = "https://google.com"
             newAudio.duration = 0.1
-            newAudio.fileSize = 0.2
+            newAudio.size = 0.2
         }
         do {
             try viewContext.save()
@@ -66,13 +66,13 @@ struct PersistenceController {
         }
     }
     
-    func addAudio(name: String, path: URL, duration: Double, fileSize: Double, context: NSManagedObjectContext) {
+    func addAudio(name: String, path: URL, duration: Double, size: Double, context: NSManagedObjectContext) {
         let newAudio = Audio(context: context)
         newAudio.timestamp = Date()
         newAudio.name = name
         newAudio.path = path.absoluteString
         newAudio.duration = duration
-        newAudio.fileSize = fileSize
+        newAudio.size = size
 
         save(context: context)
     }
