@@ -8,7 +8,41 @@
 import Foundation
 import AVFoundation
 
-class AudioManager : ObservableObject {
+func getAudioDuration(at url: URL) -> Double? {
+    let audioAsset = AVURLAsset.init(url: url, options: nil)
+    return audioAsset.duration.seconds
+}
+
+func getFileSize(at url: URL) -> Double? {
+    var fileSizeInKB: Double?
+    
+    do {
+        let fileAttributes = try FileManager.default.attributesOfItem(atPath: url.path)
+        
+        if let fileSize = fileAttributes[.size] as? Int64 {
+            fileSizeInKB = Double(fileSize) / 1024.0
+        }
+    } catch {
+        print("Error fetching file size: \(error.localizedDescription)")
+    }
+    
+    return fileSizeInKB
+}
+
+func getFileCount(fileExtension: String) -> Int {
+    var documentsDirectory: URL {
+        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    }
+    let fileManager = FileManager.default
+    let fileURLs = try? fileManager.contentsOfDirectory(at: documentsDirectory, includingPropertiesForKeys: nil)
+
+    let fileNumbers = fileURLs?
+        .filter { $0.pathExtension == "m4a" }
+    
+    return fileNumbers?.count ?? 0
+}
+
+class AudioManager : NSObject, ObservableObject, AVAudioPlayerDelegate {
     static let shared = AudioManager()
     
     var audioRecorder: AVAudioRecorder!
@@ -24,7 +58,7 @@ class AudioManager : ObservableObject {
     @Published var audioDuration: Double?
     @Published var audioSize: Double?
     
-    func startRecording() {
+    func setupRecording() {
         let audioSettings = [
             AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
             AVSampleRateKey: 12000,
@@ -38,51 +72,75 @@ class AudioManager : ObservableObject {
 
             let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
             
-            audioName = "record\(getFileCount(fileExtension: "m4a"))"
             audioURL = documentsDirectory.appendingPathComponent("\(UUID().uuidString).m4a")
 
             audioRecorder = try AVAudioRecorder(url: audioURL!, settings: audioSettings)
             audioRecorder.prepareToRecord()
-            audioRecorder.record()
-
-            isRecording = true
         } catch {
             print("Error setting up recording: \(error.localizedDescription)")
         }
     }
     
+    func startRecording() {
+        audioRecorder.record()
+        isRecording = true
+    }
+    
     func stopRecording() {
         audioRecorder.stop()
         
+        audioName = "record\(getFileCount(fileExtension: "m4a"))"
         audioDuration = getAudioDuration(at: audioURL!)
         audioSize = getFileSize(at: audioURL!)
         
         isRecording = false
     }
+    
 
-    func startPlaying(at path: URL) {
+    func setupPlaying(at path: URL) {
         do {
             try audioSession.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker)
-        } catch {
-            print("Failed to connect speaker")
-        }
-            
-        do {
             audioPlayer = try AVAudioPlayer(contentsOf : path)
             audioPlayer.prepareToPlay()
-            audioPlayer.play()
-            
-            isPlaying = true
-                
+            audioPlayer.delegate = self // Set the delegate to self
         } catch {
             print("Error playing audio: \(error.localizedDescription)")
         }
     }
     
-    func stopPlaying(){
-        audioPlayer.stop()
-        
+    func startPlaying() {
+        audioPlayer.play()
+        isPlaying = true
+    }
+    
+    func pausePlaying(){
+        audioPlayer.pause()
         isPlaying = false
     }
     
+    func stopPlaying(){
+        audioPlayer.stop()
+        isPlaying = false
+    }
+    
+    
+    func getCurrentPlayingTime() -> TimeInterval {
+        return audioPlayer.currentTime
+    }
+    
+    func setCurrentPlayingTime(currentTime: TimeInterval) {
+        audioPlayer.currentTime = currentTime
+    }
+    
+    func getDuration() -> Double {
+        return audioPlayer.duration
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        if flag {
+            stopPlaying()
+        } else {
+            print("Audio playback did not finish successfully.")
+        }
+    }
 }

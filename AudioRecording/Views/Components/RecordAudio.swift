@@ -54,6 +54,7 @@ struct RecordAudio: View {
                 )
                 dismiss()
             } else {
+                audioManager.setupRecording()
                 audioManager.startRecording()
             }
         }

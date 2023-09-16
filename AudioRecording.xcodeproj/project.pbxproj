@@ -10,7 +10,6 @@
 		E86155BC2AB2D27300B256C0 /* RecordAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86155BB2AB2D27300B256C0 /* RecordAudio.swift */; };
 		E86155BE2AB2D34A00B256C0 /* PlayAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86155BD2AB2D34A00B256C0 /* PlayAudio.swift */; };
 		E86155C12AB2D3E300B256C0 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86155C02AB2D3E300B256C0 /* AudioManager.swift */; };
-		E86155C32AB2D50500B256C0 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86155C22AB2D50500B256C0 /* Utils.swift */; };
 		E86E8BF72AAD3ED4004ECE33 /* AudioRecordingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86E8BF62AAD3ED4004ECE33 /* AudioRecordingApp.swift */; };
 		E86E8BF92AAD3ED4004ECE33 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86E8BF82AAD3ED4004ECE33 /* HomeView.swift */; };
 		E86E8BFB2AAD3ED7004ECE33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E86E8BFA2AAD3ED7004ECE33 /* Assets.xcassets */; };
@@ -23,7 +22,6 @@
 		E86155BB2AB2D27300B256C0 /* RecordAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordAudio.swift; sourceTree = "<group>"; };
 		E86155BD2AB2D34A00B256C0 /* PlayAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayAudio.swift; sourceTree = "<group>"; };
 		E86155C02AB2D3E300B256C0 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
-		E86155C22AB2D50500B256C0 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		E86E8BF32AAD3ED4004ECE33 /* AudioRecording.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioRecording.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E86E8BF62AAD3ED4004ECE33 /* AudioRecordingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingApp.swift; sourceTree = "<group>"; };
 		E86E8BF82AAD3ED4004ECE33 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -84,7 +82,6 @@
 				E86E8BFF2AAD3ED7004ECE33 /* Persistence.swift */,
 				E86E8C012AAD3ED7004ECE33 /* AudioRecording.xcdatamodeld */,
 				E86155C02AB2D3E300B256C0 /* AudioManager.swift */,
-				E86155C22AB2D50500B256C0 /* Utils.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -202,7 +199,6 @@
 				E86E8BF92AAD3ED4004ECE33 /* HomeView.swift in Sources */,
 				E86E8C032AAD3ED7004ECE33 /* AudioRecording.xcdatamodeld in Sources */,
 				E86E8BF72AAD3ED4004ECE33 /* AudioRecordingApp.swift in Sources */,
-				E86155C32AB2D50500B256C0 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
